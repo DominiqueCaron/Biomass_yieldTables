@@ -2,7 +2,7 @@
 title: "LandRCBM Manual"
 subtitle: "`r paste('v.', Sys.getenv('SpadesCBM_MAN_VERSION'))`"
 author: "Dominique Caron, Camille Giuliano"
-date: "8 May 2026"
+date: "May 25, 2026"
 output: pdf_document
 editor_options: 
   chunk_output_type: console
@@ -22,7 +22,7 @@ This documentation is work in progress. Potential discrepancies and omissions ma
 
 ## Inputs
 
-For now, there are no defaults for the inputs, and the user either need to provide all the inputs themselves or run the module alongside other modules that can generate the expected inputs (e.g., `Biomass_borealDataPrep`). 
+The module needs the inputs to run `Biomass_core`. For now, there are no defaults for the inputs, and the user either need to provide all the inputs themselves or run the module alongside other modules that can generate the expected inputs (e.g., `Biomass_borealDataPrep`). 
 
 | Name              | Class      | Description                            | Source          |
 |-------------------|------------|----------------------------------------|-----------------|
