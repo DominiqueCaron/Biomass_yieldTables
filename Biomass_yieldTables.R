@@ -11,6 +11,7 @@ defineModule(sim, list(
   authors = c(
     person("Celine", "Boisvenue", email = "cboivenue@gmail.com", role = c("aut")),
     person("Dominique", "Caron", email = "dominique.caron@nrcan-rncan.gc.ca", role = c("aut")),
+    person("Camille", "Giuliano",  email = "camsgiu@gmail.com", role = c("ctb")),
     person("Eliot", "McIntire", email = "eliot.mcintire@nrcan-rncan.gc.ca", role = c("aut", "cre"))
   ),
   childModules = character(0),
@@ -26,31 +27,25 @@ defineModule(sim, list(
     defineParameter(".plots", "character", "screen", NA, NA,
                     "Used by Plots function, which can be optionally used here"),
     defineParameter("numPlots", "integer", 40L, NA, NA,
-                    "When plotting the yield curves, this is how many unique pixel groups will ",
-                    "be randomly selected and plotted"),
+                    "Number of pixel groups that will be randomly selected and ",
+                    "for which yield curves will be plotted."),
     defineParameter("maxAge", "integer", NA, NA, NA,
-                    "The number of years for which the growth tables are created."),
+                    "The number of years for which the yield tables are created. If not provided, ",
+                    "the yield tables will be created to the largest species longevity."),
     defineParameter("moduleNameAndBranch", "character", "PredictiveEcology/Biomass_core@development (>= 1.3.9)", NA, NA,
                     "The branch and version number required for Biomass_core. This will be downloaded ",
-                    "into the file.path(dataPath(sim), 'module') of this module, so it does not ",
-                    "interact with the main user's modules. If this is set to NULL, then ",
-                    "this module will not download a new copy of Biomass_core, but will use ",
-                    "the existing one in the modulePath(sim)"),
+                    "into the 'submodules' folder of this module, so it does not ",
+                    "interact with the main user's modules."),
     defineParameter(".studyAreaName", "character", NA, NA, NA,
                     "Human-readable name for the study area used. If NA, a hash of studyArea will be used.")
   ),
-  ## DC, 22-01-2025
-  ## For now, there are no default for these inputs.
-  ## In theory, a user could provide any of the inputs of biomass_core.
-  ## In the future, `runBiomass_core` could be modified to be more explicit about
-  ## what it uses. The list of inputs should also be updated.
   inputObjects = bindrows(
     expectsInput("cohortData", "data.table",
                  desc = paste("`data.table` with cohort-level information on age and biomass, by `pixelGroup` and ecolocation",
                               "(i.e., `ecoregionGroup`) with the following columns: `pixelGroup` (integer),",
                               "`ecoregionGroup` (factor), `speciesCode` (factor), `B` (integer in $g/m^2$), `age`",
                               "(integer in years). Must be supplied by the user or created in another module",
-                              "like *biomass_BiomassDataPrep*.")),
+                              "like `Biomass_BiomassDataPrep`.")),
     expectsInput("species", "data.table",
                  desc = paste("A table of invariant species traits with the following trait colums:",
                               "'species', 'Area', 'longevity', 'sexualmature', 'shadetolerance',",
@@ -60,7 +55,7 @@ defineModule(sim, list(
                               "'hardsoft'. The last seven traits are not used in *Biomass_core*,",
                               "and may be ommited. However, this may result in downstream issues with",
                               "other modules. Must be supplied by the user or created in another module",
-                              "like *biomass_BiomassDataPrep*.")),
+                              "like `Biomass_BiomassDataPrep`.")),
     expectsInput(
       objectName = "rasterToMatch", objectClass =  "SpatRaster",
       desc = "template raster to use for simulations; defaults to RIA study area")
