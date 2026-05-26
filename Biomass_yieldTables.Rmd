@@ -2,7 +2,7 @@
 title: "LandRCBM Manual"
 subtitle: "`r paste('v.', Sys.getenv('SpadesCBM_MAN_VERSION'))`"
 author: "Dominique Caron, Camille Giuliano"
-date: "8 May 2026"
+date: "May 25, 2026"
 output: pdf_document
 editor_options: 
   chunk_output_type: console
@@ -18,11 +18,11 @@ This documentation is work in progress. Potential discrepancies and omissions ma
 
 ## Overview
 
-[Biomass_yieldTables](https://github.com/PredictiveEcology/Biomass_yieldTables) produces the biomass yield curves for cohorts on a user-specified study area from [LandR](https://landr-manual.predictiveecology.org/) simulations for use as increments to simulate carbon dynamics in [spadesCBM](https://github.com/PredictiveEcology/spadesCBM.git). The [module](https://predictiveecology.github.io/LandRCBM/lexicon.html#modules) initialize the landscape keeping species composition, but setting all biomass to 1 and ages 0. The module `Biomass_core` is then run internally without dispersal and disturbances to simulate vegetation dynamics from year 0 until all species dies out (i.e., maximum longevity among all species). The module records the above ground biomass of each species, in each pixel, at each time step to build yield tables that take into account species traits and competition.
+[Biomass_yieldTables](https://github.com/PredictiveEcology/Biomass_yieldTables) produces the biomass yield curves for cohorts on a user-specified study area from [LandR](https://landr-manual.predictiveecology.org/). The [module](https://predictiveecology.github.io/LandRCBM/lexicon.html#modules) initialize the landscape keeping species composition, but setting all biomass to 1 and ages 0. The module `Biomass_core` is then run internally without dispersal and disturbances to simulate vegetation dynamics from year 0 until all species dies out (i.e., maximum longevity among all species). The module records the aboveground biomass of each species, in each pixel, at each time step to build yield tables that take into account species traits and competition.
 
 ## Inputs
 
-For now, there are no defaults for the inputs, and the user either need to provide all the inputs themselves or run the module alognside other modules that can generate the expected inputs (e.g., `Biomass_borealDataPrep`). 
+The module needs the inputs to run `Biomass_core`. For now, there are no defaults for the inputs, and the user either need to provide all the inputs themselves or run the module alongside other modules that can generate the expected inputs (e.g., `Biomass_borealDataPrep`). 
 
 | Name              | Class      | Description                            | Source          |
 |-------------------|------------|----------------------------------------|-----------------|
@@ -34,7 +34,7 @@ For now, there are no defaults for the inputs, and the user either need to provi
 
 ### Events
 
-This [module](https://predictiveecology.github.io/LandRCBM/lexicon.html#modules) only has one [event](https://predictiveecology.github.io/LandRCBM/lexicon.html#events), the `init` event. Here the module initializes the landscape, keeping appropriate species present in each pixel and setting all ages 0 and biomass to 1. New pixel groups are then created for pixels that share the same species composition and ecoregion, these groups will then become the `yieldTableIndex`. Vegetation dynamics are simulated by running `Biomass_core` internally and the `cohortData` object is saved each year. `cohortData` objects for each year are then loaded and combined to create the yield tables, which are plotted and saved in the `ouputs` folder. 
+This [module](https://predictiveecology.github.io/LandRCBM/lexicon.html#modules) only has one [event](https://predictiveecology.github.io/LandRCBM/lexicon.html#events), the `init` event. Here, the module initializes the landscape, keeping appropriate species present in each pixel and setting all ages 0 and biomass to 1. New pixel groups are then created for pixels that share the same species composition and ecoregion, these groups will then become the `yieldTableIndex`. Vegetation dynamics are simulated by running `Biomass_core` internally and the `cohortData` object is saved each year. `cohortData` objects for each year are then loaded and combined to create the yield tables, which are plotted and saved in the `ouputs` folder. 
 
 
 ### Outputs
@@ -47,7 +47,7 @@ This [module](https://predictiveecology.github.io/LandRCBM/lexicon.html#modules)
 
 ### Usage
 
-Here is an example of a workflow to build yield tables for the RIA study area (Northeast British-Columbia). Note that you will need data permissions for permanent sample plot and inventory data to run this global. If you have permissions, be sure to sign into the appropriate Google account. Note that this global requires some large files and an initial run will take some time to download them. 
+Here is an example of a workflow to build yield tables for the Western Boreal Regional Integrated Assessment (RIA) study area. Note that you will need data permissions for permanent sample plot and inventory data to run this global. If you have permissions, be sure to sign into the appropriate Google account. Note that this global requires some large files and an initial run will take some time to download them. 
 
 
 ```
